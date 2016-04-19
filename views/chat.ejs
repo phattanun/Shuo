@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+	<title>Node Authentication</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../css/style.css">
+	<!-- <link href="../css/simple-sidebar.css" rel="stylesheet"> -->
+	<style>
+		body 		{  word-wrap:break-word; margin: 0px;}
+	</style>
+</head>
+<body>
+<div class="header navbar-fixed-top">
+	<div class="weblogo">
+		<a href="/groups"><img src="/img/logoalt.png" style="height: 1.5em;"></a>|
+		<span style="font-size:0.8em; line-height: 1em;"><i class="fa fa-comment"></i> <%=group.name %></span>
+		<a href="#menu-toggle" class="btn btn-theme float-right" id="menu-toggle" style="line-height: 1em; font-size:0.5em; margin-top:0.5em;"><i class="fa fa-bars"></i></a>
+		<a href="/logout" class="btn btn-theme float-right" id="menu-toggle" style="line-height: 1em; font-size:0.5em; margin-right: 0.2em;margin-top:0.5em;"><i class="fa fa-unlock-alt"></i> Logout</a>
+	</div>
+</div>
+<div class="clear"></div>
+
+<div id="wrapper" class="">
+	<!-- <div class="col-md-3 sidebar">
+		<ul>
+			<li><a href="/groups">Group List</a></li>
+			<li>Chat Group</li>
+			<ul>
+				<% (user.groups).forEach(function(groupList){ %>
+					<li class="<%if(groupList.groupId.toString() == group.id.toString()) { %>active<% }%>"><a href="/chat/<%=groupList.groupId%>"><%=groupList.groupName%></a></li>
+				<% }) %>
+			</ul>
+			<li><a href="/logout">Logout</a></li>
+		</ul>
+	</div> -->
+	<div id="sidebar-wrapper">
+        <ul class="sidebar-nav side-style">
+            <li><a href="/groups">Group List</a></li>
+			<li>Chat Group</li>
+			<ul>
+				<% (user.groups).forEach(function(groupList){ %>
+					<li class="<%if(groupList.groupId.toString() == group.id.toString()) { %>active<% }%>"><a href="/chat/<%=groupList.groupId%>"><%=groupList.groupName%></a></li>
+				<% }) %>
+			</ul>
+			<li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+
+
+	<div class="page-content-wrapper content">
+		<!-- <div class="text-center">
+			<h1><span class="fa fa-anchor"></span> <%=group.name %></h1>
+			<h2>Chatroom</h2>
+			<a href="/logout" class="btn btn-default btn-sm">Logout</a>
+		</div> -->
+
+		<!-- <div class="head-chat">
+			<i class="fa fa-comment"></i> <%=group.name %>
+		</div>
+		<hr> -->
+
+		<div class="container-fluid ">
+
+
+			<div class="row">
+				<div class="col-md-12 allContent">
+					<!-- <p style="color: rgba(0,0,0,0);">_____________________________</p> -->
+
+					<ul id="messages">
+							
+						<% (group.messages).forEach(function(message, i){ %>
+							<%if(message.messageOwnerId.toString() == user.id.toString()){ %>
+								<li class="myMessage float-right">
+									<div class="msgTime float-left" ><%=(new Date(message.time)).getDate()%>/<%=(new Date(message.time)).getMonth() + 1%><br>
+										<%=(new Date(message.time)).getHours()%>:<%=(new Date(message.time)).getMinutes()%>
+									</div>
+									<div class="msgBody-right float-left">
+										<div class="msgName" style="text-align:right;">
+											<%=message.messageOwnerName%>
+										</div>
+										<b><%=message.message%></b>
+									</div>
+									<div class="msgOwner float-left">
+										<%=message.messageOwnerName%>
+									</div>
+								</li>
+								<div class="clear"></div>
+							<%} else {%>
+								<li class="float-left">
+									<div class="float-left">
+										<div class="msgOwner float-left"><%=message.messageOwnerName%></div>
+									</div>
+									<% if(i <= unread -1) {%>
+										<div class="msgBody-left float-left">
+										<div class="msgName"><%=message.messageOwnerName%></div><b><%=message.message%></b></div>
+										<div class="float-left msgTime"><%=(new Date(message.time)).getDate()%>/<%=(new Date(message.time)).getMonth() + 1%><br>
+											<%=(new Date(message.time)).getHours()%>:<%=(new Date(message.time)).getMinutes()%>
+										</div>
+									<%} else {%>
+										<div class="msgBody-left-unread float-left">
+										<div class="msgName" style="color:white;"><%=message.messageOwnerName%></div><b><%=message.message%></b></div>
+										<div class="float-left msgTime"><%=(new Date(message.time)).getDate()%>/<%=(new Date(message.time)).getMonth() + 1%><br>
+											<%=(new Date(message.time)).getHours()%>:<%=(new Date(message.time)).getMinutes()%>
+										</div>
+									<%}%>
+
+
+								</li>
+								<div class="clear"></div>
+							<% } %>
+						<% }) %>	
+
+						<!-- <div style="height: 7em;"></div> -->
+					</ul>
+					<!-- <div class="col-md-12 msgbox">
+						<form action="/chat/<%=group.id %>" style="text-align:center;" id="submitMessage" method="POST">
+							<input name="message" id="message" autocomplete="off" placeholder="Type your message here..." />
+				      		<button type="submit" id="send" class="sendButton">&#8657;</button>
+					      
+					    </form>
+					</div> -->
+					<footer class="footer msgbox">
+				        <form action="/chat/<%=group.id %>" style="text-align:center;" id="submitMessage" method="POST">
+							<input name="message" id="message" autocomplete="off" placeholder="Type your message here..." />
+				      		<button type="submit" id="send" class="sendButton">&#8657;</button>
+					      
+					    </form>	
+				    </footer>
+
+				</div>
+			</div>
+		</div>
+
+		
+	</div>
+
+</div>
+
+	
+
+
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <script type="text/javascript">
+    	var socket = io();
+    	var joinVar = {};
+    	joinVar.room = '<%=group.id %>';
+    	joinVar.name = '<%=user.local.email%>'
+    	socket.emit('create', joinVar);
+    	var dataRead = {};
+    	dataRead.userId = '<%=user.id%>';
+    	dataRead.room = '<%=group.id %>';
+    	dataRead.lastMsgIndex = '<%=group.messages.length %>';
+    	socket.emit('read', dataRead);
+    	$("html, body").animate({ scrollTop: $('.allContent')[0].scrollHeight}, 500);
+
+    	contentWidth = $(".content").width();
+		$(".msgbox").width(contentWidth);	
+    	// socket.on(group.id, function(msg){
+	    //     // var temp = msg['name'] + " : " + msg['msg'];
+	    //     // if(msg['name']==user) {
+	    //     //   $('#messages').append($('<li style="font-weight: bold">').text(temp));
+	    //     //   console.log("hello");
+	    //     // }else {
+	    //       $('#messages').append($('<li>').text(msg.message));
+	    //     // }
+	        
+	    //   });
+
+		$("#menu-toggle").click(function(){
+			$("#wrapper").toggleClass("toggled", 1000).promise().done(function(){
+				setTimeout(function() {
+	                  contentWidth = $(".content").width();
+						$(".msgbox").width(contentWidth);	
+	            }, 500);
+			    
+			});;
+		});
+
+    	$('form').submit(function(){
+
+		  event.preventDefault();
+    	  if($('#message').val().trim() !== '') {
+    	  	  var msg = $('#message').val();
+    	  	  $('#message').val('');
+			  console.log("HERE !");
+			  socket.emit('sendMessage', {
+			    message: msg,
+			    messageOwnerName: '<%=user.local.email%>',
+			    messageOwnerId: '<%=user.id%>',
+			    time: new Date(),
+			    room: '<%=group.id %>'
+			  });
+		   }
+
+		  
+		});
+
+    	$(window).resize(function() {
+    		contentWidth = $(".content").width();
+    		$(".msgbox").width(contentWidth);
+    	});
+
+
+		socket.on('callback', function(data) {
+		  console.log(data.done);
+		  // Print the data.data somewhere...
+		});
+
+		socket.on('recieve', function(data) {
+		  // console.log(data);
+		  if(data.joinGroup !== true) {
+			  data.userId = '<%=user.id %>';
+			  socket.emit('read', data);
+			  if(data.messageOwnerId.toString() == '<%=user.id.toString()%>') {
+			  	var temp = "<li class='myMessage float-right'><div class='msgTime float-left'>" + (new Date(data.time)).getDate() + "/" + ((new Date(data.time)).getMonth() + 1) + "<br>" + (new Date(data.time)).getHours() + ":" +(new Date(data.time)).getMinutes() + "</div><div class='msgBody-right float-left'><div class='msgName' style='text-align:right;''>" + data.messageOwnerName +"</div><b>" + data.message + "</b></div><div class='msgOwner float-left'>" + data.messageOwnerName + "</div> </li><div class='clear'></div>";
+			  	$('#messages').append(temp);
+			  } else {
+			  	var temp = "<li class='float-left'><div class='float-left'><div class='msgOwner float-left'>" + data.messageOwnerName + "</div></div><div class='msgBody-left float-left'><div class='msgName'>" + data.messageOwnerName + "</div><b>" + data.message + "</b></div><div class='msgTime float-left'>" + (new Date(data.time)).getDate() + "/" + ((new Date(data.time)).getMonth() + 1) + "<br>" + (new Date(data.time)).getHours() + ":" +(new Date(data.time)).getMinutes() + "</div></li><div class='clear'></div>";
+			  	$('#messages').append(temp);
+			  }
+			  // var temp = "<b>" + data.messageOwnerName + "</b> " + data.message;
+			  // $('#messages').append('<li>'+(temp)+'</li>');
+			  console.log($('.allContent')[0].scrollHeight);
+			  $("html, body").animate({ scrollTop: $('.allContent')[0].scrollHeight}, 500);
+			  // Print the data.data somewhere...
+		  } else {
+		  	var temp = "<li><div class='msgBody-center'><b>" + data.message + "</b></div></li>";
+		  	$('#messages').append(temp);
+		  	$("html, body").animate({ scrollTop: $('.allContent')[0].scrollHeight}, 500);
+
+		  }
+		  
+		});
+    </script>
+</body>
+</html>
