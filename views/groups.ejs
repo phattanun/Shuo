@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>Groups List</title>
+	<title>说 | Messenger</title>
 	<!--<link rel="shortcut icon" type="image/x-icon" href="{{url('assets/images/favicon.ico')}}" />-->
 	<!--<link rel="icon" type="image/png" href="{{url('assets/images/favicon.ico')}}" />-->
 	<!--<link rel="apple-touch-icon" href="{{url('assets/images/favicon.ico')}}" />-->
@@ -126,7 +126,7 @@
 <div class="header navbar-fixed-top container">
 	<div class="weblogo">
 		<a href="/groups"><img src="/img/logo.png" style="height: 1.5em;"></a>
-		<span style="font-size:0.8em; line-height: 1em;"> Groups</span>
+		<span style="font-size:0.8em; line-height: 1em;"> Messenger</span>
 		<a href="/logout" class="btn btn-theme float-right" id="menu-toggle" style="line-height: 1em; font-size:0.5em; margin-right: 0.2em;margin-top:0.5em;"><i class="fa fa-unlock-alt"></i> Logout</a>
 	</div>
 </div>
@@ -137,7 +137,7 @@
 					<p class="groupofgroups">My Groups <span><button type="button" class="newgroup pull-right" data-toggle="modal" data-target="#addGroupModal">
 								<span class="glyphicon glyphicon-plus"></span> New Group
 							</button></span></p>
-					<% if((user.groups).length ==0) {%> <p style="color: #888;">You havn't joined any group. </p><% } %>
+					<% if((user.groups).length ==0) {%> <p style="color: #888;padding-left: 15px;">You havn't joined any group. </p><% } %>
 					<table class="table table-striped">
 						<tbody>
 							<% (user.groups).forEach(function(group,i){ %>
