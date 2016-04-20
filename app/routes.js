@@ -457,7 +457,7 @@ var io = require('socket.io').listen(server);
 	  	// console.log('Join Rooom ' + room);
 	  	msg = {};
 	  	msg.joinGroup = true;
-	  	msg.message = joinVar.name + " connected to the group";
+	  	msg.message = joinVar.name + " joined the group";
 	  	io.sockets.in(joinVar.room).emit('recieve', msg);
 	  });
 
