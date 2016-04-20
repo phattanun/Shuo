@@ -126,7 +126,7 @@
 <div class="header navbar-fixed-top container">
 	<div class="weblogo">
 		<a href="/groups"><img src="/img/logo.png" style="height: 1.5em;"></a>
-		<span style="font-size:0.8em; line-height: 1em;"> Messenger</span>
+		<span style="font-size:0.8em; line-height: 1em;" id="theTitle"> Messenger</span>
 		<a href="/logout" class="btn btn-theme float-right" id="menu-toggle" style="line-height: 1em; font-size:0.5em; margin-right: 0.2em;margin-top:0.5em;"><i class="fa fa-unlock-alt"></i> Logout</a>
 	</div>
 </div>
@@ -141,7 +141,7 @@
 					<table class="table table-striped">
 						<tbody>
 							<% (user.groups).forEach(function(group,i){ %>
-								<tr class="joinedGroup" onclick="changeChat('<%=group.groupId%>');">
+								<tr class="joinedGroup" onclick="changeChat('<%=group.groupId%>','<%= group.groupName %>');">
 									<td style="vertical-align:middle"><a target="iframe_chat" href="/chat/<%=group.groupId%>"><%= group.groupName %> <p class="unseen"><%= group.unseen %></p></a></td>
 									<td style="width:60px;">
 										<% if(own[i]) {%>
@@ -208,8 +208,9 @@
 	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script>
-		function changeChat(id) {
+		function changeChat(id,title) {
 			$('iframe').attr('src','/chat/'+id);
+			$('#theTitle').html(' Messenger | '+title);
 		}
 	</script>
 </body>
