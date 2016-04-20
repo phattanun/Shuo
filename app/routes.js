@@ -32,16 +32,16 @@ var io = require('socket.io').listen(server);
 					}
 				}
 			}
-			console.log(req.user);
+			// console.log(req.user);
 			Group.find({}, function(err, group) {
 			// console.log(group);
 				for(var i = 0; i < group.length; i++){
 					var contain = false;
 					for(var j = 0; j < req.user.groups.length; j++){
-						console.log(group[i].id + " - " + req.user.groups[j].groupId);
+						// console.log(group[i].id + " - " + req.user.groups[j].groupId);
 						if(group[i].id.toString() == req.user.groups[j].groupId.toString())
 						{
-							console.log("Delete");
+							// console.log("Delete");
 							contain = true;
 
 							if(group[i].creatorId == req.user.userId)
@@ -59,7 +59,7 @@ var io = require('socket.io').listen(server);
 				}
 
 				if(err) throw err;
-				console.log('ooooooooo ' + jgroups)
+				// console.log('ooooooooo ' + jgroups)
 
 				res.render('profile.ejs', {
 					user : req.user,
@@ -269,18 +269,18 @@ var io = require('socket.io').listen(server);
 					}
 				}
 			}
-			console.log(req.user);
+			// console.log(req.user);
 			Group.find({}, function(err, group) {
 			// console.log(group);
 				for(var i = 0; i < group.length; i++){
 					var contain = false;
 					for(var j = 0; j < req.user.groups.length; j++){
-						console.log(group[i].id + " - " + req.user.groups[j].groupId);
+						// console.log(group[i].id + " - " + req.user.groups[j].groupId);
 						if(group[i].id.toString() == req.user.groups[j].groupId.toString())
 						{
-							console.log("Delete");
+							// console.log("Delete");
 							contain = true;
-							console.log('CHECK ' + group[i].creatorId + '-' + req.user._id + ' = ' + (group[i].creatorId == req.user._id));
+							// console.log('CHECK ' + group[i].creatorId + '-' + req.user._id + ' = ' + (group[i].creatorId == req.user._id));
 							if(group[i].creatorId.toString() == req.user._id.toString())
 								jgroups[j] = true;
 							else 
@@ -295,9 +295,9 @@ var io = require('socket.io').listen(server);
 				}
 
 				if(err) throw err;
-
-				console.log('ooooooooo ' + jgroups)
-				console.log('USERRR' + req.user);
+                //
+				// console.log('ooooooooo ' + jgroups)
+				// console.log('USERRR' + req.user);
 
 				res.render('groups.ejs', {
 					user : req.user,
@@ -359,10 +359,10 @@ var io = require('socket.io').listen(server);
 	app.get('/leave/:groupId', function(req, res) {
 		var groupId = req.params.groupId;
 		var user = req.user;
-		console.log('gid ' + groupId);
+		// console.log('gid ' + groupId);
 
 		Group.findById(groupId, function(err, groupInfo){
-			console.log(groupInfo);
+			// console.log(groupInfo);
 			User.findByIdAndUpdate(
 				user.id,
 				{$pull: {"groups": {groupId: groupInfo.id}}},
@@ -376,8 +376,10 @@ var io = require('socket.io').listen(server);
 	});
 
 	app.post('/addGroup', function(req, res){
-		// res.render("hello");
-		// return "Hello";
+
+
+		io.sockets.emit('refresh');
+		
 		var user = req.user;
 		// console.log(user);
 
@@ -448,7 +450,7 @@ var io = require('socket.io').listen(server);
 
 	io.on('connection', function(socket){
 	  socket.on('chat message', function(msg){
-	    console.log('message: ' + msg);
+	    // console.log('message: ' + msg);
 	  });
 
 	  socket.on('create', function(joinVar) {
@@ -529,7 +531,7 @@ function checkLeaveGroup(data) {
 	  	msg.message = "<span style='color:red;'>" + data.name + " left the group</span>";
 	  	io.sockets.in(parts[parts.length - 1]).emit('recieve', msg);
 	}
-	console.log(parts[parts.length - 2]);
+	// console.log(parts[parts.length - 2]);
 }
 
 

@@ -207,11 +207,17 @@
 
 	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script>
+		var socket = io();
 		function changeChat(id,title) {
 			$('iframe').attr('src','/chat/'+id);
 			$('#theTitle').html(' Messenger | '+title);
 		}
+			socket.on('refresh', function() {
+				location.reload();
+			});
+
 	</script>
 </body>
 
