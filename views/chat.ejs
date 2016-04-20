@@ -7,18 +7,17 @@
 	<link rel="stylesheet" href="../css/style.css">
 	<!-- <link href="../css/simple-sidebar.css" rel="stylesheet"> -->
 	<style>
-		body 		{  word-wrap:break-word; margin: 0px;}
+		body 		{  word-wrap:break-word; margin: 0; padding: 0;}
+		.page-content-wrapper{
+			padding-top: 0px;
+		}
+		#wrapper {
+			margin-top: 20px;
+		}
 	</style>
 </head>
 <body>
-<div class="header navbar-fixed-top">
-	<div class="weblogo">
-		<a href="/groups"><img src="/img/logo.png" style="height: 1.5em;"></a>|
-		<span style="font-size:0.8em; line-height: 1em;"><i class="fa fa-comment"></i> <%=group.name %></span>
-		<a href="#menu-toggle" class="btn btn-theme float-right" id="menu-toggle" style="line-height: 1em; font-size:0.5em; margin-top:0.5em;"><i class="fa fa-bars"></i></a>
-		<a href="/logout" class="btn btn-theme float-right" id="menu-toggle" style="line-height: 1em; font-size:0.5em; margin-right: 0.2em;margin-top:0.5em;"><i class="fa fa-unlock-alt"></i> Logout</a>
-	</div>
-</div>
+
 <div class="clear"></div>
 
 <div id="wrapper" class="">
@@ -46,8 +45,6 @@
 			<li><a href="/logout">Logout</a></li>
         </ul>
     </div>
-
-
 	<div class="page-content-wrapper content">
 		<!-- <div class="text-center">
 			<h1><span class="fa fa-anchor"></span> <%=group.name %></h1>
@@ -76,9 +73,6 @@
 										<%=(new Date(message.time)).getHours()%>:<%=(new Date(message.time)).getMinutes()%>
 									</div>
 									<div class="msgBody-right float-left">
-										<div class="msgName" style="text-align:right;">
-											<%=message.messageOwnerName%>
-										</div>
 										<b><%=message.message%></b>
 									</div>
 									<div class="msgOwner float-left">
@@ -93,7 +87,7 @@
 									</div>
 									<% if(i <= unread -1) {%>
 										<div class="msgBody-left float-left">
-										<div class="msgName"><%=message.messageOwnerName%></div><b><%=message.message%></b></div>
+										<b><%=message.message%></b></div>
 										<div class="float-left msgTime"><%=(new Date(message.time)).getDate()%>/<%=(new Date(message.time)).getMonth() + 1%><br>
 											<%=(new Date(message.time)).getHours()%>:<%=(new Date(message.time)).getMinutes()%>
 										</div>
@@ -122,8 +116,8 @@
 					</div> -->
 					<footer class="footer msgbox">
 				        <form action="/chat/<%=group.id %>" style="text-align:center;" id="submitMessage" method="POST">
-							<input name="message" id="message" autocomplete="off" placeholder="Type your message here..." />
-				      		<button type="submit" id="send" class="sendButton">&#8657;</button>
+							<input name="message" id="message" autocomplete="off" placeholder="Type a message..." />
+				      		<button type="submit" id="send" class="sendButton">send</button>
 					      
 					    </form>	
 				    </footer>
