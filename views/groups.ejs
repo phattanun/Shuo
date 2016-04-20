@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="../css/style.css">
 		<style>
 		html, body {
 			height: 100%;
@@ -78,23 +79,32 @@
 			vertical-align: middle;
 			font-size: 0.8em
 		}
+			.text-center {
+				text-align: center!important;
+			}
 	</style>
 </head>
 <body>
-<div style="margin-left:0px; margin-right:0px; container verticalcenter">
+<div class="header navbar-fixed-top">
+	<div class="weblogo">
+		<a href="/groups"><img src="/img/logo.png" style="height: 1.5em;"></a>|
+		<span style="font-size:0.8em; line-height: 1em;"><i class="fa fa-comment"></i> </span>
+		<a href="#menu-toggle" class="btn btn-theme float-right" id="menu-toggle" style="line-height: 1em; font-size:0.5em; margin-top:0.5em;"><i class="fa fa-bars"></i></a>
+		<a href="/logout" class="btn btn-theme float-right" id="menu-toggle" style="line-height: 1em; font-size:0.5em; margin-right: 0.2em;margin-top:0.5em;"><i class="fa fa-unlock-alt"></i> Logout</a>
+	</div>
+</div>
+<div style="margin-left:0px; margin-right:0px;" class="container-fluid">
 
-	<div class="row" style="background-color: #2a2a2a;"> 
+	<div class="row" style="background-color: #ffffff;">
 		<div class="row">
-			<div class="col-sm-6 col-sm-offset-3 ">
-				<img src="./img/logoalt.png" style="max-width:100%; max-height:100%; padding-top:20px; padding-bottom:20px;">
+			<div class="col-sm-6 col-sm-offset-3 text-center">
+				<img width="30%" src="./img/logo.png" style="max-width:100%; max-height:100%; padding-top:20px; padding-bottom:20px;">
 			</div>
 		</div>
 		<div class="row" style="padding-bottom:20px; text-align: center;">
-			<button type="button" class="newgroup" data-toggle="modal" data-target="#addGroupModal"> 
+			<button type="button" class="newgroup" data-toggle="modal" data-target="#addGroupModal">
 				<span class="glyphicon glyphicon-plus"></span> New Group
 			</button>
-			<button onclick="window.location='/logout';" class="logout"><span class="glyphicon glyphicon-user"></span> Logout</button>
-
 		</div>
 	</div>
 	<div class="row groupbox">
