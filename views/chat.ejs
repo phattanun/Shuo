@@ -93,7 +93,7 @@
 										</div>
 									<%} else {%>
 										<div class="msgBody-left-unread float-left">
-										<div class="msgName" style="color:white;"><%=message.messageOwnerName%></div><b><%=message.message%></b></div>
+										<b><%=message.message%></b></div>
 										<div class="float-left msgTime"><%=(new Date(message.time)).getDate()%>/<%=(new Date(message.time)).getMonth() + 1%><br>
 											<%=(new Date(message.time)).getHours()%>:<%=(new Date(message.time)).getMinutes()%>
 										</div>
@@ -209,10 +209,10 @@
 			  data.userId = '<%=user.id %>';
 			  socket.emit('read', data);
 			  if(data.messageOwnerId.toString() == '<%=user.id.toString()%>') {
-			  	var temp = "<li class='myMessage float-right'><div class='msgTime float-left'>" + (new Date(data.time)).getDate() + "/" + ((new Date(data.time)).getMonth() + 1) + "<br>" + (new Date(data.time)).getHours() + ":" +(new Date(data.time)).getMinutes() + "</div><div class='msgBody-right float-left'><div class='msgName' style='text-align:right;''>" + data.messageOwnerName +"</div><b>" + data.message + "</b></div><div class='msgOwner float-left'>" + data.messageOwnerName + "</div> </li><div class='clear'></div>";
+			  	var temp = "<li class='myMessage float-right'><div class='msgTime float-left'>" + (new Date(data.time)).getDate() + "/" + ((new Date(data.time)).getMonth() + 1) + "<br>" + (new Date(data.time)).getHours() + ":" +(new Date(data.time)).getMinutes() + "</div><div class='msgBody-right float-left'><b>" + data.message + "</b></div><div class='msgOwner float-left'>" + data.messageOwnerName + "</div> </li><div class='clear'></div>";
 			  	$('#messages').append(temp);
 			  } else {
-			  	var temp = "<li class='float-left'><div class='float-left'><div class='msgOwner float-left'>" + data.messageOwnerName + "</div></div><div class='msgBody-left float-left'><div class='msgName'>" + data.messageOwnerName + "</div><b>" + data.message + "</b></div><div class='msgTime float-left'>" + (new Date(data.time)).getDate() + "/" + ((new Date(data.time)).getMonth() + 1) + "<br>" + (new Date(data.time)).getHours() + ":" +(new Date(data.time)).getMinutes() + "</div></li><div class='clear'></div>";
+			  	var temp = "<li class='float-left'><div class='float-left'><div class='msgOwner float-left'>" + data.messageOwnerName + "</div></div><div class='msgBody-left float-left'><b>" + data.message + "</b></div><div class='msgTime float-left'>" + (new Date(data.time)).getDate() + "/" + ((new Date(data.time)).getMonth() + 1) + "<br>" + (new Date(data.time)).getHours() + ":" +(new Date(data.time)).getMinutes() + "</div></li><div class='clear'></div>";
 			  	$('#messages').append(temp);
 			  }
 			  // var temp = "<b>" + data.messageOwnerName + "</b> " + data.message;
@@ -228,6 +228,7 @@
 		  }
 		  
 		});
+
     </script>
 </body>
 </html>

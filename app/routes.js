@@ -323,6 +323,7 @@ var io = require('socket.io').listen(server);
 					
 				});
 		});
+		io.sockets.emit('setUnread');
 		
 	});
 
@@ -446,6 +447,7 @@ var io = require('socket.io').listen(server);
 				});
 			// console.log(group);
 		}
+		io.sockets.emit('setUnread');
 	});
 
 	io.on('connection', function(socket){
@@ -476,11 +478,46 @@ var io = require('socket.io').listen(server);
 	  				//console.log(user);
 	  			});
 	  		// });
+		  io.sockets.emit('setUnread');
 	  });
+
+		socket.on('getUnread',function(userId){
+			console.log('=================='+userId+'=======================');
+			var user;
+			var unseen = [];
+			User.find({_id:userId},function(err,users){
+				// console.log(users);
+				user = users;
+			});
+			
+			io.sockets.emit('setUnread');
+
+			// Group.find({}, function(err, groups) {
+			// 	console.log(groups);
+			// 		for (var j = 0; j < groups.length; j++) {
+			// 			unseen[j] = groups[j].messages.length - user.groups[i].lastRead;
+			// 		}
+			// });
+			// io.sockets.emit('setUnread',unseen);
+
+			// Group.find({}, function(err, groups) {
+			// 	for (var i = 0; i < req.user.groups.length; i++) {
+			// 		for (var j = 0; j < groups.length; j++) {
+			// 			if (req.user.groups[i].groupId.toString() == groups[j].id.toString()) {
+			// 				req.user.groups[i].unseen = groups[j].messages.length - req.user.groups[i].lastRead;
+			// 				break;
+			// 			}
+			// 		}
+			// 	}
+			// });
+			// console.log(req.user.groups[0].unseen);
+		});
 
 	  socket.on('sendMessage', function(msg) {
 	  	// console.log('my message ');
 	  	// console.log(msg.room);
+		  io.sockets.emit('setUnread');
+		  
 	  	saveMsg = {};
 	  	saveMsg.messageOwnerId = msg.messageOwnerId;
 	  	saveMsg.messageOwnerName = msg.messageOwnerName;
@@ -518,8 +555,73 @@ var io = require('socket.io').listen(server);
 		//   });
 		// });
         // socket.emit(groupId, {messageOwnerName: user.name, messageOwnerId: user.id, time: new Date(), message: req.body.message});
-        
+		io.sockets.emit('setUnread');
 		
+	});
+
+	app.get('/groupddds', isLoggedIn, function(req, res) {
+		checkLeaveGroup({"name":req.user.local.email,"url":req.headers.referer});
+		var groups = [];
+		var unjoined = [];
+		var jgroups = [];
+		var unseen = [];
+		var groupId = [];
+		Group.find({}, function(err, groups) {
+			for(var i = 0;  i < req.user.groups.length; i++){
+				for(var j = 0; j < groups.length; j++){
+					if(req.user.groups[i].groupId.toString() == groups[j].id.toString()){
+						unseen[j] = groups[j].messages.length - req.user.groups[i].lastRead;
+						groupId[j] = groups[j].id.toString();
+						break;
+					}
+				}
+			}
+			// console.log(req.user);
+			Group.find({}, function(err, group) {
+				// console.log(group);
+				for(var i = 0; i < group.length; i++){
+					var contain = false;
+					for(var j = 0; j < req.user.groups.length; j++){
+						// console.log(group[i].id + " - " + req.user.groups[j].groupId);
+						if(group[i].id.toString() == req.user.groups[j].groupId.toString())
+						{
+							// console.log("Delete");
+							contain = true;
+							// console.log('CHECK ' + group[i].creatorId + '-' + req.user._id + ' = ' + (group[i].creatorId == req.user._id));
+							if(group[i].creatorId.toString() == req.user._id.toString())
+								jgroups[j] = true;
+							else
+								jgroups[j] = false;
+							// jgroups.push(group[i]);
+							break;
+						}
+					}
+
+					if(contain == false)
+						unjoined.push(group[i]);
+				}
+
+				if(err) throw err;
+				//
+				// console.log('ooooooooo ' + jgroups)
+				// console.log('USERRR' + req.user);
+
+				// res.render('groups.ejs', {
+				// 	user : req.user,
+				// 	own : jgroups,
+				// 	groups: unjoined,
+				// 	message: {}
+				// });
+
+				res.status(200).send({
+					groupId: groupId,
+					unseen:unseen,
+					user : req.user,
+					own : jgroups,
+					groups: unjoined});
+
+			});
+		});
 	});
 
 

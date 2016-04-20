@@ -127,6 +127,7 @@
 	<div class="weblogo">
 		<a href="/groups"><img src="/img/logo.png" style="height: 1.5em;"></a>
 		<span style="font-size:0.8em; line-height: 1em;" id="theTitle"> Messenger</span>
+		<input id="theTitleName" type="hidden">
 		<a href="/logout" class="btn btn-theme float-right" id="menu-toggle" style="line-height: 1em; font-size:0.5em; margin-right: 0.2em;margin-top:0.5em;"><i class="fa fa-unlock-alt"></i> Logout</a>
 	</div>
 </div>
@@ -142,7 +143,7 @@
 						<tbody>
 							<% (user.groups).forEach(function(group,i){ %>
 								<tr class="joinedGroup" onclick="changeChat('<%=group.groupId%>','<%= group.groupName %>');">
-									<td style="vertical-align:middle"><a target="iframe_chat" href="/chat/<%=group.groupId%>"><%= group.groupName %> <p class="unseen"><%= group.unseen %></p></a></td>
+									<td style="vertical-align:middle"><a target="iframe_chat" href="/chat/<%=group.groupId%>"><%= group.groupName %> <p id="unseen<%=group.groupId%>" thename="<%= group.groupName %>" class="unseen"><%= group.unseen %></p></a></td>
 									<td style="width:60px;">
 										<% if(own[i]) {%>
 											<a class="btn btn-danger btn-xs equalBtn" href="/delete/<%= group.groupId %>">Remove</a>
@@ -213,10 +214,35 @@
 		function changeChat(id,title) {
 			$('iframe').attr('src','/chat/'+id);
 			$('#theTitle').html(' Messenger | '+title);
+			$('#theTitleName').val(title);
 		}
 			socket.on('refresh', function() {
 				location.reload();
 			});
+
+		socket.on('unread', function(data) {
+			var userId = '<%=user.id%>';
+//			var userGroup = '<%=user.Group%>';
+//			console.log('<%=user.Group%>');
+			socket.emit('getUnread',userId);
+		});
+
+		socket.on('setUnread',function(){
+			$.get( "/groupddds").done(function(data) {
+				for(var i=0;i<data['unseen'].length;i++){
+					if(data['unseen'][i]&&data['groupId'][i])
+					{
+						if($('#unseen'+data['groupId'][i]).attr('thename')==$('#theTitleName').val()){
+							$('#unseen'+data['groupId'][i]).html(0);
+						}
+						else {
+							$('#unseen'+data['groupId'][i]).html(data['unseen'][i]);
+						}
+					}
+
+				}
+			});
+		});
 
 	</script>
 </body>
