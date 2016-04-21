@@ -96,6 +96,9 @@ var io = require('socket.io').listen(server);
 			//res.render('login.ejs', { message: 'asdfsadfsad' });
 
 		});
+		app.get('/placeholder', function(req, res) {
+			res.render('placeholder.ejs');
+		});
 
 		// process the login form
 		app.post('/login', passport.authenticate('local-login', {
