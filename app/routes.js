@@ -353,7 +353,7 @@ var io = require('socket.io').listen(server);
 					res.redirect('/groups');
 					
 				});
-
+		io.sockets.emit('refresh')
 	});
 
 
