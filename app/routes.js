@@ -323,7 +323,7 @@ var io = require('socket.io').listen(server);
 					
 				});
 		});
-		io.sockets.emit('setUnread');
+		// io.sockets.emit('setUnread');
 		
 	});
 
@@ -447,7 +447,7 @@ var io = require('socket.io').listen(server);
 				});
 			// console.log(group);
 		}
-		io.sockets.emit('setUnread');
+		// io.sockets.emit('setUnread');
 	});
 
 	io.on('connection', function(socket){
@@ -478,7 +478,7 @@ var io = require('socket.io').listen(server);
 	  				//console.log(user);
 	  			});
 	  		// });
-		  io.sockets.emit('setUnread');
+		  // io.sockets.emit('setUnread');
 	  });
 
 		socket.on('getUnread',function(userId){
@@ -490,7 +490,7 @@ var io = require('socket.io').listen(server);
 				user = users;
 			});
 			
-			io.sockets.emit('setUnread');
+			// io.sockets.emit('setUnread');
 
 			// Group.find({}, function(err, groups) {
 			// 	console.log(groups);
@@ -516,7 +516,7 @@ var io = require('socket.io').listen(server);
 	  socket.on('sendMessage', function(msg) {
 	  	// console.log('my message ');
 	  	// console.log(msg.room);
-		  io.sockets.emit('setUnread');
+		  // io.sockets.emit('setUnread');
 		  
 	  	saveMsg = {};
 	  	saveMsg.messageOwnerId = msg.messageOwnerId;
@@ -555,7 +555,7 @@ var io = require('socket.io').listen(server);
 		//   });
 		// });
         // socket.emit(groupId, {messageOwnerName: user.name, messageOwnerId: user.id, time: new Date(), message: req.body.message});
-		io.sockets.emit('setUnread');
+        // io.sockets.emit('setUnread');
 		
 	});
 
