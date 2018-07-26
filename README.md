@@ -1,10 +1,6 @@
-# ChatNow web application
+# Shuo web chat application
 
-ChatNow is online chat service for internal member.
-
-## Instructions
-
-Not have yet.
+Shuo is online chat service for internal member.
 
 ### Authentication Module
 Authentication module comes from `github.com/scotch-io/node-authentication-guide`
